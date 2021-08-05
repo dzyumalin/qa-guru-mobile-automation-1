@@ -1,7 +1,9 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.MobileConfig;
 import io.appium.java_client.android.AndroidDriver;
+import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -9,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BrowserStackMobileDriver implements WebDriverProvider {
+
+     static MobileConfig config = ConfigFactory.create(MobileConfig.class, System.getProperties());
 
     public static URL getBrowserStackUrl() {
         try {
@@ -22,11 +26,11 @@ public class BrowserStackMobileDriver implements WebDriverProvider {
     public WebDriver createDriver(DesiredCapabilities desiredCapabilities) {
 
         // Set your access credentials
-        desiredCapabilities.setCapability("browserstack.user", "zyumalin_pAn1Hs");
-        desiredCapabilities.setCapability("browserstack.key", "TcckcRQGVQNyf9JXpNiq");
+        desiredCapabilities.setCapability("browserstack.user", config.getBrowserStackUser());
+        desiredCapabilities.setCapability("browserstack.key", config.getBrowserStackKey());
 
         // Set URL of the application under test
-        desiredCapabilities.setCapability("app", "bs://c700ce60cf13ae8ed97705a55b8e022f13c5827c");
+        desiredCapabilities.setCapability("app", config.getUrl());
 
         // Specify device and os_version for testing
         desiredCapabilities.setCapability("device", "Google Pixel 3");
